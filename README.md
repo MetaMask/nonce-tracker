@@ -46,10 +46,6 @@ Returns **[Promise][17]&lt;[Object][14]>** with the key releaseLock (the gloabl 
 -   `nextNetworkNonce` **[number][19]** The next nonce suggested by the eth_getTransactionCount method.
 -   `highestSuggested` **[number][19]** The maximum between the other two, the number returned.
 
-### getNonceLock
-
-[index.js:48-82][18]
-
 this will return an object with the `nextNonce` `nonceDetails`, and the releaseLock
 Note: releaseLock must be called after adding a signed tx to pending transactions (or discarding).
 
