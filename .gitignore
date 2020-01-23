@@ -1,6 +1,6 @@
 npm-debug.log
 node_modules
-yarn.lock
+package-lock.json
 
 # test coverage outs
 .nyc_output/
