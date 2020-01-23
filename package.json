@@ -4,6 +4,7 @@
   "description": "nonce calculation used in metamask",
   "main": "index.js",
   "scripts": {
+    "lint": "echo",
     "test": "mocha test/nonce-tracker-test.js"
   },
   "keywords": [
