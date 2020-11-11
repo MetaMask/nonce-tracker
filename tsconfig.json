@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "declaration": true,
+    "module": "CommonJS",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5",
+    "esModuleInterop": true,
+    "typeRoots": [
+      "./node_modules/@types",
+    ],
+    "outDir": "dist"
+  },
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

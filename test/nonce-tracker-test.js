@@ -1,5 +1,5 @@
 const assert = require('assert')
-const NonceTracker = require('../index.js')
+const NonceTracker = require('../dist/index')
 const MockTxGen = require('./lib/mock-tx-gen')
 const providerResultStub = {}
 

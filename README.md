@@ -21,7 +21,7 @@ nonce = nonceLock.nextNonce
 -   `opts` **[Object][14]** {Object}
     -   `opts.provider` **[Object][14]** a ethereum provider
     -   `opts.getPendingTransactions` **[Function][15]** a function that returns an array of txMeta
-        whosee status is `submitted`
+        whoese status is `submitted`
     -   `opts.getConfirmedTransactions` **[Function][15]** a function that returns an array of txMeta
         whose status is `confirmed`
     -   `opts.blockTracker`
