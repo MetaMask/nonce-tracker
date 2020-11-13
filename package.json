@@ -4,9 +4,10 @@
   "description": "nonce calculation used in metamask",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "lint": "echo",
-    "test": "mocha test/nonce-tracker-test.js"
+    "build": "tsc --project .",
+    "test": "yarn build && mocha test/nonce-tracker-test.js",
+    "lint": "eslint . --ext ts,js,json",
+    "lint:fix": "yarn lint --fix"
   },
   "files": [
     "dist/"
@@ -26,7 +27,14 @@
     "ethjs-query": "^0.3.8"
   },
   "devDependencies": {
+    "@metamask/eslint-config": "^4.1.0",
     "@types/node": "^14.14.7",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint": "^7.12.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-json": "^2.1.1",
+    "eslint-plugin-node": "^11.1.0",
     "ethereumjs-util": "^6.1.0",
     "mocha": "^6.1.4",
     "typescript": "^4.0.5",
