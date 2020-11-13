@@ -1,7 +1,7 @@
 {
   "name": "nonce-tracker",
   "version": "1.0.1",
-  "description": "nonce calculation used in metamask",
+  "description": "Transaction nonce calculation used in MetaMask.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --project .",

@@ -26,7 +26,6 @@ module.exports = {
   }],
   ignorePatterns: [
     '!eslintrc.js',
-    'coverage/',
     'dist/',
     'node_modules/',
   ],
