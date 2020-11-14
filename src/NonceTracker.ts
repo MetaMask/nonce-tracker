@@ -13,7 +13,7 @@ const EthQuery = require('ethjs-query');
  *  whose status is `confirmed`
  */
 export interface NonceTrackerOptions {
-  provider: Record<string, unknown>;
+  provider: any;
   blockTracker: any;
   getPendingTransactions: (address: string) => Transaction[];
   getConfirmedTransactions: (address: string) => Transaction[];
@@ -88,7 +88,7 @@ export interface Transaction {
 }
 
 export class NonceTracker {
-  private provider: Record<string, unknown>;
+  private provider: any;
 
   private blockTracker: any;
 
@@ -98,7 +98,7 @@ export class NonceTracker {
 
   private getConfirmedTransactions: ((address: string) => Transaction[]);
 
-  private lockMap: Record<string, unknown>;
+  private lockMap: Record<string, Mutex>;
 
   constructor(opts: NonceTrackerOptions) {
     this.provider = opts.provider;
@@ -122,7 +122,7 @@ export class NonceTracker {
   /**
    * this will return an object with the `nextNonce` `nonceDetails`, and the releaseLock
    * Note: releaseLock must be called after adding a signed tx to pending transactions (or discarding).
-
+   *
    * @param address the hex string for the address whose nonce we are calculating
    * @returns {Promise<NonceLock>}
    */
@@ -163,19 +163,19 @@ export class NonceTracker {
     }
   }
 
-  async _globalMutexFree() {
+  async _globalMutexFree(): Promise<void> {
     const globalMutex = this._lookupMutex('global');
     const releaseLock = await globalMutex.acquire();
     releaseLock();
   }
 
-  async _takeMutex(lockId: string): Promise<any> {
+  async _takeMutex(lockId: string): Promise< () => void > {
     const mutex = this._lookupMutex(lockId);
     const releaseLock = await mutex.acquire();
     return releaseLock;
   }
 
-  _lookupMutex(lockId: string): any {
+  _lookupMutex(lockId: string): Mutex {
     let mutex = this.lockMap[lockId];
     if (!mutex) {
       mutex = new Mutex();
@@ -229,7 +229,7 @@ export class NonceTracker {
 
   /**
    * Function return the nonce value higher than the highest nonce value from the transaction list
-   *  starting from startPoint
+   * starting from startPoint
    * @param txList {array} - list of txMeta's
    * @param startPoint {number} - the highest known locally confirmed nonce
    */
