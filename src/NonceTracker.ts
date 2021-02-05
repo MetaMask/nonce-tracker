@@ -3,6 +3,8 @@ import { Mutex } from 'await-semaphore';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const EthQuery = require('ethjs-query');
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
+const BlockTracker = require('eth-block-tracker');
 
 /**
  *  @property opts.provider - An ethereum provider
@@ -13,8 +15,8 @@ const EthQuery = require('ethjs-query');
  *  whose status is `confirmed`
  */
 export interface NonceTrackerOptions {
-  provider: any;
-  blockTracker: any;
+  provider: Record<string, unknown>;
+  blockTracker: typeof BlockTracker;
   getPendingTransactions: (address: string) => Transaction[];
   getConfirmedTransactions: (address: string) => Transaction[];
 }
@@ -44,7 +46,7 @@ export interface NonceDetails {
 export interface NonceLock{
   nextNonce: number;
   nonceDetails: NonceDetails;
-  releaseLock: () => void;
+  releaseLock: VoidFunction;
 }
 
 /**
@@ -88,11 +90,11 @@ export interface Transaction {
 }
 
 export class NonceTracker {
-  private provider: any;
+  private provider: Record<string, unknown>;
 
-  private blockTracker: any;
+  private blockTracker: typeof BlockTracker;
 
-  private ethQuery: any;
+  private ethQuery: typeof EthQuery;
 
   private getPendingTransactions: ((address: string) => Transaction[]);
 
@@ -113,9 +115,9 @@ export class NonceTracker {
    * @returns Promise<{ releaseLock: () => void }> with the key releaseLock (the global mutex)
    */
   async getGlobalLock(): Promise<{ releaseLock: () => void }> {
-    const globalMutex = this._lookupMutex('global');
+    const globalMutex: Mutex = this._lookupMutex('global');
     // await global mutex free
-    const releaseLock = await globalMutex.acquire();
+    const releaseLock: VoidFunction = await globalMutex.acquire();
     return { releaseLock };
   }
 
@@ -130,16 +132,16 @@ export class NonceTracker {
     // await global mutex free
     await this._globalMutexFree();
     // await lock free, then take lock
-    const releaseLock = await this._takeMutex(address);
+    const releaseLock: VoidFunction = await this._takeMutex(address);
     try {
       // evaluate multiple nextNonce strategies
-      const networkNonceResult = await this._getNetworkNextNonce(address);
-      const highestLocallyConfirmed = this._getHighestLocallyConfirmed(address);
-      const nextNetworkNonce = networkNonceResult.nonce;
-      const highestSuggested = Math.max(nextNetworkNonce, highestLocallyConfirmed);
+      const networkNonceResult: NetworkNextNonce = await this._getNetworkNextNonce(address);
+      const highestLocallyConfirmed: number = this._getHighestLocallyConfirmed(address);
+      const nextNetworkNonce: number = networkNonceResult.nonce;
+      const highestSuggested: number = Math.max(nextNetworkNonce, highestLocallyConfirmed);
 
       const pendingTxs: Transaction[] = this.getPendingTransactions(address);
-      const localNonceResult = this._getHighestContinuousFrom(pendingTxs, highestSuggested);
+      const localNonceResult: HighestContinuousFrom = this._getHighestContinuousFrom(pendingTxs, highestSuggested);
 
       const nonceDetails: NonceDetails = {
         params: {
@@ -151,7 +153,7 @@ export class NonceTracker {
         network: networkNonceResult,
       };
 
-      const nextNonce = Math.max(networkNonceResult.nonce, localNonceResult.nonce);
+      const nextNonce: number = Math.max(networkNonceResult.nonce, localNonceResult.nonce);
       assert(Number.isInteger(nextNonce), `nonce-tracker - nextNonce is not an integer - got: (${typeof nextNonce}) "${nextNonce}"`);
 
       // return nonce and release cb
@@ -164,19 +166,19 @@ export class NonceTracker {
   }
 
   async _globalMutexFree(): Promise<void> {
-    const globalMutex = this._lookupMutex('global');
-    const releaseLock = await globalMutex.acquire();
+    const globalMutex: Mutex = this._lookupMutex('global');
+    const releaseLock: VoidFunction = await globalMutex.acquire();
     releaseLock();
   }
 
-  async _takeMutex(lockId: string): Promise< () => void > {
-    const mutex = this._lookupMutex(lockId);
-    const releaseLock = await mutex.acquire();
+  async _takeMutex(lockId: string): Promise< VoidFunction > {
+    const mutex: Mutex = this._lookupMutex(lockId);
+    const releaseLock: VoidFunction = await mutex.acquire();
     return releaseLock;
   }
 
   _lookupMutex(lockId: string): Mutex {
-    let mutex = this.lockMap[lockId];
+    let mutex: Mutex = this.lockMap[lockId];
     if (!mutex) {
       mutex = new Mutex();
       this.lockMap[lockId] = mutex;
@@ -199,8 +201,7 @@ export class NonceTracker {
     const baseCountBN = await this.ethQuery.getTransactionCount(address, blockNumber);
     const baseCount: number = baseCountBN.toNumber();
     assert(Number.isInteger(baseCount), `nonce-tracker - baseCount is not an integer - got: (${typeof baseCount}) "${baseCount}"`);
-    const nonceDetails = { blockNumber, baseCount };
-    return { name: 'network', nonce: baseCount, details: nonceDetails };
+    return { name: 'network', nonce: baseCount, details: { blockNumber, baseCount } };
   }
 
   /**
@@ -209,7 +210,7 @@ export class NonceTracker {
    */
   _getHighestLocallyConfirmed(address: string): number {
     const confirmedTransactions: Transaction[] = this.getConfirmedTransactions(address);
-    const highest = this._getHighestNonce(confirmedTransactions);
+    const highest: number = this._getHighestNonce(confirmedTransactions);
     return Number.isInteger(highest) ? highest + 1 : 0;
   }
 
@@ -218,12 +219,12 @@ export class NonceTracker {
    * @param txList list of transactions
    */
   _getHighestNonce(txList: Transaction[]): number {
-    const nonces = txList.map((txMeta) => {
+    const nonces: number[] = txList.map((txMeta) => {
       const { nonce } = txMeta.txParams;
       assert(typeof nonce === 'string', 'nonces should be hex strings');
       return parseInt(nonce, 16);
     });
-    const highestNonce = Math.max.apply(null, nonces);
+    const highestNonce: number = Math.max.apply(null, nonces);
     return highestNonce;
   }
 
@@ -234,13 +235,13 @@ export class NonceTracker {
    * @param startPoint {number} - the highest known locally confirmed nonce
    */
   _getHighestContinuousFrom(txList: Transaction[], startPoint: number): HighestContinuousFrom {
-    const nonces = txList.map((txMeta) => {
+    const nonces: number[] = txList.map((txMeta) => {
       const { nonce } = txMeta.txParams;
       assert(typeof nonce === 'string', 'nonces should be hex strings');
       return parseInt(nonce, 16);
     });
 
-    let highest = startPoint;
+    let highest: number = startPoint;
     while (nonces.includes(highest)) {
       highest += 1;
     }

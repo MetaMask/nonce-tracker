@@ -4,7 +4,7 @@
   "description": "Transaction nonce calculation used in MetaMask.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc --project .",
+    "build": "rm -rf ./dist && tsc --project .",
     "test": "yarn build && mocha test/nonce-tracker-test.js",
     "lint": "eslint . --ext ts,js,json",
     "lint:fix": "yarn lint --fix"
@@ -35,6 +35,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-json": "^2.1.1",
     "eslint-plugin-node": "^11.1.0",
+    "eth-block-tracker": "^4.4.3",
     "ethereumjs-util": "^6.1.0",
     "mocha": "^8.2.1",
     "typescript": "^4.0.5",
