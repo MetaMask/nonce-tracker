@@ -112,9 +112,9 @@ export class NonceTracker {
   }
 
   /**
-   * @returns Promise<{ releaseLock: () => void }> with the key releaseLock (the global mutex)
+   * @returns Promise<{ releaseLock: VoidFunction }> with the key releaseLock (the global mutex)
    */
-  async getGlobalLock(): Promise<{ releaseLock: () => void }> {
+  async getGlobalLock(): Promise<{ releaseLock: VoidFunction }> {
     const globalMutex: Mutex = this._lookupMutex('global');
     // await global mutex free
     const releaseLock: VoidFunction = await globalMutex.acquire();
