@@ -22,7 +22,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "assert": "^1.4.1",
     "await-semaphore": "^0.1.3",
     "ethjs-query": "^0.3.8"
   },
