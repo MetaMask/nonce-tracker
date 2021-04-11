@@ -55,6 +55,12 @@ Note: releaseLock must be called after adding a signed tx to pending transaction
 
 Returns **[Promise][17]&lt;NonceDetails>**
 
+## Running tests
+
+```bash
+yarn test
+```
+
 
 
 [13]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L13-L159 "Source code on GitHub"
