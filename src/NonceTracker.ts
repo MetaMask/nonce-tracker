@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { Mutex } from 'await-semaphore';
+import { Mutex } from 'async-mutex';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const EthQuery = require('ethjs-query');
