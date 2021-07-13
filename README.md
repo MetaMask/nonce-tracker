@@ -3,11 +3,11 @@
 How metamask calculates nonces
 
 ```js
-const NonceTracker = require("nonce-tracker");
+const NonceTracker = require('nonce-tracker');
 
 const nonceTracker = new NonceTracker(config);
 
-nonceLock = nonceTracker.getNonceLock("0xselectedEthereumAddress");
+nonceLock = nonceTracker.getNonceLock('0xselectedEthereumAddress');
 
 nonce = nonceLock.nextNonce;
 ```
@@ -61,10 +61,10 @@ Returns **[Promise][17]&lt;NonceDetails>**
 yarn test
 ```
 
-[13]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L13-L159 "Source code on GitHub"
+[13]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L13-L159 'Source code on GitHub'
 [14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 [15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-[16]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L27-L32 "Source code on GitHub"
+[16]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L27-L32 'Source code on GitHub'
 [17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
-[18]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L48-L82 "Source code on GitHub"
+[18]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L48-L82 'Source code on GitHub'
 [19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
