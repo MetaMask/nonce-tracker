@@ -21,3 +21,6 @@ coverage/
 temp
 .tmp
 .DS_Store
+
+# ESLint
+.eslintcache

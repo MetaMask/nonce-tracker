@@ -3,13 +3,13 @@
 How metamask calculates nonces
 
 ```js
-const NonceTracker = require('nonce-tracker')
+const NonceTracker = require("nonce-tracker");
 
-const nonceTracker = new NonceTracker(config)
+const nonceTracker = new NonceTracker(config);
 
-nonceLock = nonceTracker.getNonceLock('0xselectedEthereumAddress')
+nonceLock = nonceTracker.getNonceLock("0xselectedEthereumAddress");
 
-nonce = nonceLock.nextNonce
+nonce = nonceLock.nextNonce;
 ```
 
 ## NonceTracker
@@ -18,13 +18,13 @@ nonce = nonceLock.nextNonce
 
 ### Parameters
 
--   `opts` **[Object][14]** {Object}
-    -   `opts.provider` **[Object][14]** a ethereum provider
-    -   `opts.getPendingTransactions` **[Function][15]** a function that returns an array of txMeta
-        whose status is `submitted`
-    -   `opts.getConfirmedTransactions` **[Function][15]** a function that returns an array of txMeta
-        whose status is `confirmed`
-    -   `opts.blockTracker`
+- `opts` **[Object][14]** {Object}
+  - `opts.provider` **[Object][14]** a ethereum provider
+  - `opts.getPendingTransactions` **[Function][15]** a function that returns an array of txMeta
+    whose status is `submitted`
+  - `opts.getConfirmedTransactions` **[Function][15]** a function that returns an array of txMeta
+    whose status is `confirmed`
+  - `opts.blockTracker`
 
 ### getGlobalLock
 
@@ -38,20 +38,20 @@ Returns **[Promise][17]&lt;[Object][14]>** with the key releaseLock (the gloabl 
 
 #### Parameters
 
--   `address`
+- `address`
 
 #### Properties
 
--   `highestLocallyConfirmed` **[number][19]** A hex string of the highest nonce on a confirmed transaction.
--   `nextNetworkNonce` **[number][19]** The next nonce suggested by the eth_getTransactionCount method.
--   `highestSuggested` **[number][19]** The maximum between the other two, the number returned.
+- `highestLocallyConfirmed` **[number][19]** A hex string of the highest nonce on a confirmed transaction.
+- `nextNetworkNonce` **[number][19]** The next nonce suggested by the eth_getTransactionCount method.
+- `highestSuggested` **[number][19]** The maximum between the other two, the number returned.
 
 this will return an object with the `nextNonce` `nonceDetails`, and the releaseLock
 Note: releaseLock must be called after adding a signed tx to pending transactions (or discarding).
 
 #### Parameters
 
--   `address`  {string} the hex string for the address whose nonce we are calculating
+- `address` {string} the hex string for the address whose nonce we are calculating
 
 Returns **[Promise][17]&lt;NonceDetails>**
 
@@ -61,19 +61,10 @@ Returns **[Promise][17]&lt;NonceDetails>**
 yarn test
 ```
 
-
-
 [13]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L13-L159 "Source code on GitHub"
-
 [14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
 [16]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L27-L32 "Source code on GitHub"
-
 [17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
-
 [18]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L48-L82 "Source code on GitHub"
-
 [19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
