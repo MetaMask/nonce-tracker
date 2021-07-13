@@ -7,16 +7,9 @@
     "strict": true,
     "target": "ES2017",
     "esModuleInterop": true,
-    "typeRoots": [
-      "./node_modules/@types",
-    ],
+    "typeRoots": ["./node_modules/@types"],
     "outDir": "dist"
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -4,9 +4,13 @@ workflows:
   lint:
     jobs:
       - prep-deps
+      - test-build:
+          requires:
+            - prep-deps
       - test-lint:
           requires:
             - prep-deps
+            - test-build
       - test-unit:
           requires:
             - prep-deps
@@ -32,8 +36,23 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-          - node_modules
-          - build-artifacts
+            - node_modules
+            - build-artifacts
+
+  test-build:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build project
+          command: yarn build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
 
   test-lint:
     docker:
