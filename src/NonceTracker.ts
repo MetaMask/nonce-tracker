@@ -19,6 +19,8 @@ export interface NonceTrackerOptions {
   blockTracker: typeof BlockTracker;
   getPendingTransactions: (address: string) => Transaction[];
   getConfirmedTransactions: (address: string) => Transaction[];
+  getExternalPendingTransactions: (address: string) => Transaction[];
+  getExternalConfirmedTransactions: (address: string) => Transaction[];
 }
 
 /**
@@ -78,7 +80,7 @@ export interface HighestContinuousFrom {
   };
 }
 
-export interface Transaction {
+export interface InternalTransaction {
   status: string;
   history: [Record<string, unknown>];
   txParams: {
@@ -88,6 +90,18 @@ export interface Transaction {
     nonce: string;
   };
 }
+
+export interface ExternalTransaction {
+  status: string;
+  txParams: {
+    from: string;
+    gas: string;
+    value: string;
+    nonce: string;
+  };
+}
+
+export type Transaction = InternalTransaction | ExternalTransaction;
 
 export class NonceTracker {
   private provider: Record<string, unknown>;
@@ -100,6 +114,10 @@ export class NonceTracker {
 
   private getConfirmedTransactions: (address: string) => Transaction[];
 
+  private getExternalPendingTransactions: (address: string) => Transaction[];
+
+  private getExternalConfirmedTransactions: (address: string) => Transaction[];
+
   private lockMap: Record<string, Mutex>;
 
   constructor(opts: NonceTrackerOptions) {
@@ -108,6 +126,8 @@ export class NonceTracker {
     this.ethQuery = new EthQuery(opts.provider);
     this.getPendingTransactions = opts.getPendingTransactions;
     this.getConfirmedTransactions = opts.getConfirmedTransactions;
+    this.getExternalPendingTransactions = opts.getExternalPendingTransactions;
+    this.getExternalConfirmedTransactions = opts.getExternalConfirmedTransactions;
     this.lockMap = {};
   }
 
@@ -146,8 +166,9 @@ export class NonceTracker {
       );
 
       const pendingTxs: Transaction[] = this.getPendingTransactions(address);
+      const pendingExternalTxs: Transaction[] = this.getExternalPendingTransactions(address);
       const localNonceResult: HighestContinuousFrom =
-        this._getHighestContinuousFrom(pendingTxs, highestSuggested);
+        this._getHighestContinuousFrom([...pendingTxs, ...pendingExternalTxs], highestSuggested);
 
       const nonceDetails: NonceDetails = {
         params: {
@@ -233,7 +254,9 @@ export class NonceTracker {
   _getHighestLocallyConfirmed(address: string): number {
     const confirmedTransactions: Transaction[] =
       this.getConfirmedTransactions(address);
-    const highest: number = this._getHighestNonce(confirmedTransactions);
+    const confirmedExternalTransactions: Transaction[] =
+      this.getExternalConfirmedTransactions(address);
+    const highest: number = this._getHighestNonce([...confirmedTransactions, ...confirmedExternalTransactions]);
     return Number.isInteger(highest) ? highest + 1 : 0;
   }
 
