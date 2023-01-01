@@ -68,3 +68,4 @@ yarn test
 [17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [18]: https://github.com/MetaMask/nonce-tracker/blob/587ee0b25e16543330830e71372e0a9b94c166c4/index.js#L48-L82 'Source code on GitHub'
 [19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+test
