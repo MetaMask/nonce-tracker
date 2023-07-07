@@ -1,18 +1,10 @@
 name: Create Release Pull Request
 
 on:
-  workflow_dispatch:
-    inputs:
-      base-branch:
-        description: 'The base branch for git operations and the pull request.'
-        default: 'main'
-        required: true
-      release-type:
-        description: 'A SemVer version diff, i.e. major, minor, or patch. Mutually exclusive with "release-version".'
-        required: false
-      release-version:
-        description: 'A specific version to bump to. Mutually exclusive with "release-type".'
-        required: false
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   create-release-pr:
@@ -40,4 +32,3 @@ jobs:
           release-type: ${{ github.event.inputs.release-type }}
           release-version: ${{ github.event.inputs.release-version }}
 
-          
