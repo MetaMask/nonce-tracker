@@ -13,7 +13,7 @@ on:
         default: 'patch'        
       release-version:
         description: '1.1'
-        required: true
+        required: false
 
     
 
