@@ -7,11 +7,11 @@ const EthQuery = require('ethjs-query');
 const BlockTracker = require('eth-block-tracker');
 
 /**
- *  @property opts.provider - An ethereum provider
- *  @property opts.blockTracker - An instance of eth-block-tracker
- *  @property opts.getPendingTransactions - A function that returns an array of txMeta
+ * @property opts.provider - An ethereum provider
+ * @property opts.blockTracker - An instance of eth-block-tracker
+ * @property opts.getPendingTransactions - A function that returns an array of txMeta
  *  whose status is `submitted`
- *  @property opts.getConfirmedTransactions - A function that returns an array of txMeta
+ * @property opts.getConfirmedTransactions - A function that returns an array of txMeta
  *  whose status is `confirmed`
  */
 export interface NonceTrackerOptions {
@@ -125,7 +125,7 @@ export class NonceTracker {
    * this will return an object with the `nextNonce` `nonceDetails`, and the releaseLock
    * Note: releaseLock must be called after adding a signed tx to pending transactions (or discarding).
    *
-   * @param address the hex string for the address whose nonce we are calculating
+   * @param address - the hex string for the address whose nonce we are calculating
    * @returns {Promise<NonceLock>}
    */
   async getNonceLock(address: string): Promise<NonceLock> {
@@ -202,7 +202,7 @@ export class NonceTracker {
    * Function returns the nonce details from teh network based on the latest block
    * and eth_getTransactionCount method
    *
-   * @param address the hex string for the address whose nonce we are calculating
+   * @param address - the hex string for the address whose nonce we are calculating
    * @returns {Promise<NetworkNextNonce>}
    */
   async _getNetworkNextNonce(address: string): Promise<NetworkNextNonce> {
@@ -228,7 +228,8 @@ export class NonceTracker {
 
   /**
    * Function returns the highest of the confirmed transaction from the address.
-   * @param address the hex string for the address whose nonce we are calculating
+   *
+   * @param address - the hex string for the address whose nonce we are calculating
    */
   _getHighestLocallyConfirmed(address: string): number {
     const confirmedTransactions: Transaction[] =
@@ -239,7 +240,8 @@ export class NonceTracker {
 
   /**
    * Function returns highest nonce value from the transcation list provided
-   * @param txList list of transactions
+   *
+   * @param txList - list of transactions
    */
   _getHighestNonce(txList: Transaction[]): number {
     const nonces: number[] = txList.map((txMeta) => {
@@ -254,8 +256,9 @@ export class NonceTracker {
   /**
    * Function return the nonce value higher than the highest nonce value from the transaction list
    * starting from startPoint
-   * @param txList {array} - list of txMeta's
-   * @param startPoint {number} - the highest known locally confirmed nonce
+   *
+   * @param txList - {array} - list of txMeta's
+   * @param startPoint - {number} - the highest known locally confirmed nonce
    */
   _getHighestContinuousFrom(
     txList: Transaction[],
