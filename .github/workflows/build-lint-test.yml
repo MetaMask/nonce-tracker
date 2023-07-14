@@ -1,10 +1,7 @@
 name: Build, Lint, and Test
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
 
 jobs:
   prepare:
@@ -20,8 +17,8 @@ jobs:
       - name: Install Yarn dependencies
         run: yarn --immutable
 
-  build:
-    name: Build
+  build-source:
+    name: Build source
     runs-on: ubuntu-latest
     needs:
       - prepare
@@ -36,7 +33,32 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn --immutable --immutable-cache
-      - run: yarn build
+      - run: yarn build:source
+      - name: Require clean working directory
+        shell: bash
+        run: |
+          if ! git diff --exit-code; then
+            echo "Working tree dirty at end of job"
+            exit 1
+          fi
+
+  build-types:
+    name: Build types
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x, 18.x, 20.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn --immutable --immutable-cache
+      - run: yarn build:types
       - name: Require clean working directory
         shell: bash
         run: |
@@ -52,7 +74,7 @@ jobs:
       - prepare
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [12.x, 14.x, 16.x, 18.x, 20.x]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -83,7 +105,7 @@ jobs:
       - prepare
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [12.x, 14.x, 16.x, 18.x, 20.x]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -100,6 +122,3 @@ jobs:
             echo "Working tree dirty at end of job"
             exit 1
           fi
-
-
-          
