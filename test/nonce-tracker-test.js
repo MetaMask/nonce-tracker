@@ -249,6 +249,7 @@ describe('Nonce Tracker', function () {
           },
           { count: 1 },
         );
+
         // 0x32 is 50 in hex:
         nonceTracker = generateNonceTrackerWith(
           pendingTxs,
