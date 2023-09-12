@@ -1,4 +1,5 @@
 const assert = require('assert');
+// eslint-disable-next-line import/no-unresolved
 const NonceTracker = require('../dist');
 const MockTxGen = require('./lib/mock-tx-gen');
 
