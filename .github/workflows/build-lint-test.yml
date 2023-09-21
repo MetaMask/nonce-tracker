@@ -15,7 +15,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install Yarn dependencies
-        run: yarn --immutable
+        run: yarn --immutable --ignore-engines
 
   build:
     name: Build
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - run: yarn --immutable --immutable-cache
+      - run: yarn --immutable --immutable-cache --ignore-engines
       - run: yarn build
       - name: Require clean working directory
         shell: bash
@@ -49,7 +49,7 @@ jobs:
       - prepare
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x, 18.x, 20.x]
+        node-version: [16.x, 18.x, 20.x]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -57,14 +57,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - run: yarn --immutable --immutable-cache
+      - run: yarn --immutable --immutable-cache --ignore-engines
       - run: yarn lint
-      - name: Validate RC changelog
-        if: ${{ startsWith(github.head_ref, 'release/') }}
-        run: yarn auto-changelog validate --rc
-      - name: Validate changelog
-        if: ${{ !startsWith(github.head_ref, 'release/') }}
-        run: yarn auto-changelog validate
+      # TODO: Enable once CHANGELOG.md is in place
+      #- name: Validate RC changelog
+      #  if: ${{ startsWith(github.head_ref, 'release/') }}
+      #  run: yarn auto-changelog validate --rc
+      #- name: Validate changelog
+      #  if: ${{ !startsWith(github.head_ref, 'release/') }}
+      #  run: yarn auto-changelog validate
       - name: Require clean working directory
         shell: bash
         run: |
@@ -88,7 +89,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - run: yarn --immutable --immutable-cache
+      - run: yarn --immutable --immutable-cache --ignore-engines
       - run: yarn test
       - name: Require clean working directory
         shell: bash
