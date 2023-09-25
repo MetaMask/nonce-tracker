@@ -2,7 +2,7 @@ import assert from 'assert';
 import { Mutex } from 'async-mutex';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const EthQuery = require('ethjs-query');
+const { Web3Provider } = require('@ethersproject/providers');
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const BlockTracker = require('eth-block-tracker');
 
@@ -94,7 +94,7 @@ export class NonceTracker {
 
   private blockTracker: typeof BlockTracker;
 
-  private ethQuery: typeof EthQuery;
+  private web3: typeof Web3Provider;
 
   private getPendingTransactions: (address: string) => Transaction[];
 
@@ -105,7 +105,7 @@ export class NonceTracker {
   constructor(opts: NonceTrackerOptions) {
     this.provider = opts.provider;
     this.blockTracker = opts.blockTracker;
-    this.ethQuery = new EthQuery(opts.provider);
+    this.web3 = new Web3Provider(opts.provider);
     this.getPendingTransactions = opts.getPendingTransactions;
     this.getConfirmedTransactions = opts.getConfirmedTransactions;
     this.lockMap = {};
@@ -210,11 +210,10 @@ export class NonceTracker {
     // we need to make sure our base count
     // and pending count are from the same block
     const blockNumber: string = await this.blockTracker.getLatestBlock();
-    const baseCountBN = await this.ethQuery.getTransactionCount(
+    const baseCount: number = await this.web3.getTransactionCount(
       address,
       blockNumber,
     );
-    const baseCount: number = baseCountBN.toNumber();
     assert(
       Number.isInteger(baseCount),
       `nonce-tracker - baseCount is not an integer - got: (${typeof baseCount}) "${baseCount}"`,
