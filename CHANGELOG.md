@@ -8,9 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0]
 ### Changed
-- Dependency changes
-  - Add `eth-block-tracker@^4.4.3` ([#12](https://github.com/MetaMask/nonce-tracker/pull/12))
-  - Replace `await-semaphore` with `async-mutex` ([#15](https://github.com/MetaMask/nonce-tracker/pull/15))
+- Add `eth-block-tracker@^4.4.3` ([#12](https://github.com/MetaMask/nonce-tracker/pull/12))
+- Replace `await-semaphore` with `async-mutex` ([#15](https://github.com/MetaMask/nonce-tracker/pull/15))
 
 - TypeScript definition changes
   - Improve type semantics ([#12](https://github.com/MetaMask/nonce-tracker/pull/12))
