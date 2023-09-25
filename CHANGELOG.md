@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [2.0.0]
-### Uncategorized
-- deps: switch from ethjs-query to @ethersproject/providers ([#39](https://github.com/MetaMask/nonce-tracker/pull/39))
-- Minimum Node.js version 14 ([#42](https://github.com/MetaMask/nonce-tracker/pull/42))
+### Changes
+- **BREAKING:** Switched from `ethjs-query` to `@ethersproject/providers` ([#39](https://github.com/MetaMask/nonce-tracker/pull/39))
+- **BREAKING:** Minimum Node.js version is now 14 ([#42](https://github.com/MetaMask/nonce-tracker/pull/42))
 
 ## [1.2.0]
 ### Changed
