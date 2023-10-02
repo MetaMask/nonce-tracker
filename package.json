@@ -19,7 +19,7 @@
     "build": "rm -rf ./dist && tsc --project .",
     "test": "yarn build && mocha test/nonce-tracker-test.js",
     "lint:eslint": "eslint . --cache --ext js,ts",
-    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' '**/*.yml' --ignore-path .gitignore",
+    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' '**/*.yml' '!.yarnrc.yml' --ignore-path .gitignore",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write"
   },
@@ -28,6 +28,8 @@
     "async-mutex": "^0.3.1"
   },
   "devDependencies": {
+    "@lavamoat/allow-scripts": "^2.5.1",
+    "@lavamoat/preinstall-always-fail": "^1.0.3",
     "@metamask/eslint-config": "^10.0.0",
     "@metamask/eslint-config-mocha": "^10.0.0",
     "@metamask/eslint-config-nodejs": "^10.0.0",
@@ -52,5 +54,13 @@
   },
   "engines": {
     "node": "^14.21 || ^16.20 || ^18.16 || >=20"
-  }
+  },
+  "lavamoat": {
+    "allowScripts": {
+      "@lavamoat/preinstall-always-fail": false,
+      "ethereumjs-util>keccak": false,
+      "ethereumjs-util>secp256k1": false
+    }
+  },
+  "packageManager": "yarn@3.6.3"
 }
