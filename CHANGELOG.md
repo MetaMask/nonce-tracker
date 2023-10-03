@@ -7,14 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [2.0.0]
-### Uncategorized
-- ci: lint changelog ([#51](https://github.com/MetaMask/nonce-tracker/pull/51))
-- Revert "2.0.0 (#48)" ([#48](https://github.com/MetaMask/nonce-tracker/pull/48))
-- 2.0.0 ([#48](https://github.com/MetaMask/nonce-tracker/pull/48))
-- migrate to yarn v3 ([#49](https://github.com/MetaMask/nonce-tracker/pull/49))
-- yarn dedupe ([#47](https://github.com/MetaMask/nonce-tracker/pull/47))
-- deps: switch from ethjs-query to @ethersproject/providers ([#39](https://github.com/MetaMask/nonce-tracker/pull/39))
-- Minimum Node.js version 14 ([#42](https://github.com/MetaMask/nonce-tracker/pull/42))
+### Changed
+- **BREAKING:** Switched from `ethjs-query` to `@ethersproject/providers` ([#39](https://github.com/MetaMask/nonce-tracker/pull/39))
+- **BREAKING:** Minimum Node.js version is now 14 ([#42](https://github.com/MetaMask/nonce-tracker/pull/42))
 
 ## [1.2.0]
 ### Changed
