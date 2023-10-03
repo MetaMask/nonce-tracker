@@ -59,13 +59,12 @@ jobs:
           cache: 'yarn'
       - run: yarn --immutable --immutable-cache
       - run: yarn lint
-      # TODO: Enable once CHANGELOG.md is in place
-      #- name: Validate RC changelog
-      #  if: ${{ startsWith(github.head_ref, 'release/') }}
-      #  run: yarn auto-changelog validate --rc
-      #- name: Validate changelog
-      #  if: ${{ !startsWith(github.head_ref, 'release/') }}
-      #  run: yarn auto-changelog validate
+      - name: Validate RC changelog
+        if: ${{ startsWith(github.head_ref, 'release/') }}
+        run: yarn auto-changelog validate --rc
+      - name: Validate changelog
+        if: ${{ !startsWith(github.head_ref, 'release/') }}
+        run: yarn auto-changelog validate
       - name: Require clean working directory
         shell: bash
         run: |
