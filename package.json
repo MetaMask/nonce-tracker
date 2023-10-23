@@ -35,7 +35,7 @@
     "@metamask/eslint-config-mocha": "^10.0.0",
     "@metamask/eslint-config-nodejs": "^10.0.0",
     "@metamask/eslint-config-typescript": "^10.0.0",
-    "@types/node": "^14.14.7",
+    "@types/node": "^16.18.59",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "eslint": "^8.36.0",
@@ -54,7 +54,7 @@
     "xtend": "^4.0.1"
   },
   "engines": {
-    "node": "^14.21 || ^16.20 || ^18.16 || >=20"
+    "node": "^16.20 || ^18.16 || >=20"
   },
   "lavamoat": {
     "allowScripts": {

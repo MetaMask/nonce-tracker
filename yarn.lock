@@ -629,10 +629,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.7":
-  version: 14.14.7
-  resolution: "@types/node@npm:14.14.7"
-  checksum: ce210aece9c0ffbf0c4fb0aa35827aae3b787773c877c5f772708fdff253a5e8f2364ebdb0208d44678f6f46e7a948b75069e231717331f499616f9d82b060a2
+"@types/node@npm:^16.18.59":
+  version: 16.18.59
+  resolution: "@types/node@npm:16.18.59"
+  checksum: 70f28744d239c48db056ff6355d2eb99305db54d1f9377b3f4458e92ffb4da8962a0c67665452d5f430cea2286ced256dac8f769660007aedd3676cf03ff28ad
   languageName: node
   linkType: hard
 
@@ -3298,7 +3298,7 @@ __metadata:
     "@metamask/eslint-config-mocha": ^10.0.0
     "@metamask/eslint-config-nodejs": ^10.0.0
     "@metamask/eslint-config-typescript": ^10.0.0
-    "@types/node": ^14.14.7
+    "@types/node": ^16.18.59
     "@typescript-eslint/eslint-plugin": ^5.30.7
     "@typescript-eslint/parser": ^5.30.7
     async-mutex: ^0.3.1
