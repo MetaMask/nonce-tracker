@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [3.0.0]
-### Uncategorized
-- Export types; Move NonceTracker to named export instead of default ([#53](https://github.com/MetaMask/nonce-tracker/pull/53))
 ### Added
 - Add ancillary types ([#53](https://github.com/MetaMask/nonce-tracker/pull/53))
 
