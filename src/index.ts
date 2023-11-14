@@ -1,3 +1,10 @@
-import { NonceTracker } from './NonceTracker';
+export { NonceTracker } from './NonceTracker';
 
-export = NonceTracker;
+export type {
+  NonceTrackerOptions,
+  NonceDetails,
+  NonceLock,
+  NetworkNextNonce,
+  HighestContinuousFrom,
+  Transaction,
+} from './NonceTracker';
