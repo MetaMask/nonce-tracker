@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0]
+### Uncategorized
+- Export types; Move NonceTracker to named export instead of default ([#53](https://github.com/MetaMask/nonce-tracker/pull/53))
+- BREAKING: Drop support for Node.js v14 ([#54](https://github.com/MetaMask/nonce-tracker/pull/54))
+
 ## [2.0.0]
 ### Changed
 - **BREAKING:** Switched from `ethjs-query` to `@ethersproject/providers` ([#39](https://github.com/MetaMask/nonce-tracker/pull/39))
@@ -33,7 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add documentation
 
-[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/MetaMask/nonce-tracker/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/MetaMask/nonce-tracker/compare/v1.0.1...v1.1.0
