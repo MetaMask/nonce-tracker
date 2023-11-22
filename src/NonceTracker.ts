@@ -1,5 +1,6 @@
 import assert from 'assert';
 import { Mutex } from 'async-mutex';
+import type { SafeEventEmitterProvider } from '@metamask/eth-json-rpc-provider';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const { Web3Provider } = require('@ethersproject/providers');
@@ -15,7 +16,7 @@ const BlockTracker = require('eth-block-tracker');
  *  whose status is `confirmed`
  */
 export interface NonceTrackerOptions {
-  provider: Record<string, unknown>;
+  provider: SafeEventEmitterProvider;
   blockTracker: typeof BlockTracker;
   getPendingTransactions: (address: string) => Transaction[];
   getConfirmedTransactions: (address: string) => Transaction[];
@@ -90,8 +91,6 @@ export interface Transaction {
 }
 
 export class NonceTracker {
-  private provider: Record<string, unknown>;
-
   private blockTracker: typeof BlockTracker;
 
   private web3: typeof Web3Provider;
@@ -103,7 +102,6 @@ export class NonceTracker {
   private lockMap: Record<string, Mutex>;
 
   constructor(opts: NonceTrackerOptions) {
-    this.provider = opts.provider;
     this.blockTracker = opts.blockTracker;
     this.web3 = new Web3Provider(opts.provider);
     this.getPendingTransactions = opts.getPendingTransactions;
