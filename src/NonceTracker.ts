@@ -1,9 +1,9 @@
 import assert from 'assert';
 import { Mutex } from 'async-mutex';
 import type { SafeEventEmitterProvider } from '@metamask/eth-json-rpc-provider';
+import EthQuery from '@metamask/eth-query';
+import { hexToNumber } from '@metamask/utils';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const { Web3Provider } = require('@ethersproject/providers');
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const BlockTracker = require('eth-block-tracker');
 
@@ -93,7 +93,7 @@ export interface Transaction {
 export class NonceTracker {
   private blockTracker: typeof BlockTracker;
 
-  private web3: typeof Web3Provider;
+  private ethQuery: EthQuery;
 
   private getPendingTransactions: (address: string) => Transaction[];
 
@@ -103,7 +103,7 @@ export class NonceTracker {
 
   constructor(opts: NonceTrackerOptions) {
     this.blockTracker = opts.blockTracker;
-    this.web3 = new Web3Provider(opts.provider);
+    this.ethQuery = new EthQuery(opts.provider);
     this.getPendingTransactions = opts.getPendingTransactions;
     this.getConfirmedTransactions = opts.getConfirmedTransactions;
     this.lockMap = {};
@@ -208,14 +208,22 @@ export class NonceTracker {
     // we need to make sure our base count
     // and pending count are from the same block
     const blockNumber: string = await this.blockTracker.getLatestBlock();
-    const baseCount: number = await this.web3.getTransactionCount(
-      address,
-      blockNumber,
-    );
-    assert(
-      Number.isInteger(baseCount),
-      `nonce-tracker - baseCount is not an integer - got: (${typeof baseCount}) "${baseCount}"`,
-    );
+    const baseCountAsHex = await new Promise<string>((resolve, reject) => {
+      this.ethQuery.sendAsync<string[], string>(
+        {
+          method: 'eth_getTransactionCount',
+          params: [address, blockNumber],
+        },
+        (...args) => {
+          if (args[0] === null) {
+            resolve(args[1]);
+          } else {
+            reject(args[0]);
+          }
+        },
+      );
+    });
+    const baseCount = hexToNumber(baseCountAsHex);
     return {
       name: 'network',
       nonce: baseCount,
