@@ -1,10 +1,9 @@
 import assert from 'assert';
 import { Mutex } from 'async-mutex';
+import { PollingBlockTracker } from 'eth-block-tracker';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const { Web3Provider } = require('@ethersproject/providers');
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const BlockTracker = require('eth-block-tracker');
 
 /**
  * @property opts.provider - An ethereum provider
@@ -16,7 +15,7 @@ const BlockTracker = require('eth-block-tracker');
  */
 export interface NonceTrackerOptions {
   provider: Record<string, unknown>;
-  blockTracker: typeof BlockTracker;
+  blockTracker: PollingBlockTracker;
   getPendingTransactions: (address: string) => Transaction[];
   getConfirmedTransactions: (address: string) => Transaction[];
 }
@@ -92,7 +91,7 @@ export interface Transaction {
 export class NonceTracker {
   private provider: Record<string, unknown>;
 
-  private blockTracker: typeof BlockTracker;
+  private blockTracker: PollingBlockTracker;
 
   private web3: typeof Web3Provider;
 
@@ -209,7 +208,7 @@ export class NonceTracker {
     // calculate next nonce
     // we need to make sure our base count
     // and pending count are from the same block
-    const blockNumber: string = await this.blockTracker.getLatestBlock();
+    const blockNumber = await this.blockTracker.getLatestBlock();
     const baseCount: number = await this.web3.getTransactionCount(
       address,
       blockNumber,
