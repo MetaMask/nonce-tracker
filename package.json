@@ -1,5 +1,5 @@
 {
-  "name": "nonce-tracker",
+  "name": "@metamask/nonce-tracker",
   "version": "4.0.0",
   "description": "Transaction nonce calculation used in MetaMask.",
   "keywords": [
@@ -55,6 +55,10 @@
   },
   "engines": {
     "node": "^16.20 || ^18.16 || >=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "lavamoat": {
     "allowScripts": {

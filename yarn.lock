@@ -520,6 +520,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@metamask/nonce-tracker@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@metamask/nonce-tracker@workspace:."
+  dependencies:
+    "@ethersproject/providers": ^5.7.2
+    "@lavamoat/allow-scripts": ^2.5.1
+    "@lavamoat/preinstall-always-fail": ^1.0.3
+    "@metamask/auto-changelog": ^3.3.0
+    "@metamask/eslint-config": ^10.0.0
+    "@metamask/eslint-config-mocha": ^10.0.0
+    "@metamask/eslint-config-nodejs": ^10.0.0
+    "@metamask/eslint-config-typescript": ^10.0.0
+    "@types/node": ^16.18.59
+    "@typescript-eslint/eslint-plugin": ^5.30.7
+    "@typescript-eslint/parser": ^5.30.7
+    async-mutex: ^0.3.1
+    eslint: ^8.36.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-jsdoc: ^39.2.9
+    eslint-plugin-mocha: ^10.1.0
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-prettier: ^4.2.1
+    eth-block-tracker: ^8.1.0
+    ethereumjs-util: ^6.1.0
+    mocha: ^9.2.2
+    prettier: ^2.7.1
+    prettier-plugin-packagejson: ^2.2.11
+    typescript: ^4.0.7
+    xtend: ^4.0.1
+  languageName: unknown
+  linkType: soft
+
 "@metamask/rpc-errors@npm:^6.1.0":
   version: 6.1.0
   resolution: "@metamask/rpc-errors@npm:6.1.0"
@@ -3403,39 +3436,6 @@ __metadata:
   checksum: 78b404e2e0639d64e145845f7f5a3cb20c0520cdaf6dda2f6e025e9b644077202ea7de1232396ba5bde3fee84cdc79604feebe6ba3ec84d464c85d407bb5da99
   languageName: node
   linkType: hard
-
-"nonce-tracker@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "nonce-tracker@workspace:."
-  dependencies:
-    "@ethersproject/providers": ^5.7.2
-    "@lavamoat/allow-scripts": ^2.5.1
-    "@lavamoat/preinstall-always-fail": ^1.0.3
-    "@metamask/auto-changelog": ^3.3.0
-    "@metamask/eslint-config": ^10.0.0
-    "@metamask/eslint-config-mocha": ^10.0.0
-    "@metamask/eslint-config-nodejs": ^10.0.0
-    "@metamask/eslint-config-typescript": ^10.0.0
-    "@types/node": ^16.18.59
-    "@typescript-eslint/eslint-plugin": ^5.30.7
-    "@typescript-eslint/parser": ^5.30.7
-    async-mutex: ^0.3.1
-    eslint: ^8.36.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-jsdoc: ^39.2.9
-    eslint-plugin-mocha: ^10.1.0
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-prettier: ^4.2.1
-    eth-block-tracker: ^8.1.0
-    ethereumjs-util: ^6.1.0
-    mocha: ^9.2.2
-    prettier: ^2.7.1
-    prettier-plugin-packagejson: ^2.2.11
-    typescript: ^4.0.7
-    xtend: ^4.0.1
-  languageName: unknown
-  linkType: soft
 
 "nopt@npm:^6.0.0":
   version: 6.0.0
