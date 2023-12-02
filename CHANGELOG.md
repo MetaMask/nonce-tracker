@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.0.0]
 ### Changed
-- Bump `eth-block-tracker` from `^4.4.3` to `^8.1.0` ([#56](https://github.com/MetaMask/nonce-tracker/pull/56))
+- **BREAKING**: Bump `eth-block-tracker` from `^4.4.3` to `^8.1.0` ([#56](https://github.com/MetaMask/nonce-tracker/pull/56))
 
 ## [3.0.0]
 ### Added
