@@ -1,9 +1,9 @@
-# nonce-tracker
+# `@metamask/nonce-tracker`
 
 How metamask calculates nonces
 
 ```js
-const NonceTracker = require('nonce-tracker');
+const NonceTracker = require('@metamask/nonce-tracker');
 
 const nonceTracker = new NonceTracker(config);
 
