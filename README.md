@@ -1,4 +1,4 @@
-# nonce-tracker
+# `@metamask/nonce-tracker`
 
 How metamask calculates nonces
 
