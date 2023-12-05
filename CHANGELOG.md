@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0]
+### Changed
+- **BREAKING**: Bump `eth-block-tracker` from `^4.4.3` to `^8.1.0` ([#56](https://github.com/MetaMask/nonce-tracker/pull/56))
+  - If you're using this package in a TypeScript setting, when creating a new NonceTracker, you must pass in an instance of PollingBlockTracker (failure to do so now produces a type error).
+
 ## [3.0.0]
 ### Added
 - Add ancillary types ([#53](https://github.com/MetaMask/nonce-tracker/pull/53))
@@ -41,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add documentation
 
-[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/MetaMask/nonce-tracker/compare/v1.1.0...v1.2.0
