@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { Mutex } from 'async-mutex';
-import type { PollingBlockTracker } from 'eth-block-tracker';
+import type { PollingBlockTracker } from '@metamask/eth-block-tracker';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const { Web3Provider } = require('@ethersproject/providers');
