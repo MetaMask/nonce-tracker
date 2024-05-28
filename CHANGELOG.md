@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.0]
+### Changed
+- Rename package from `nonce-tracker` to `@metamask/nonce-tracker` ([#61](https://github.com/MetaMask/nonce-tracker/pull/61))
+
+### Fixed
+- **BREAKING**: Replace implicit peer-dependency `eth-block-tracker` with explicit peerDependency `@metamask/eth-block-tracker` ([#73](https://github.com/MetaMask/nonce-tracker/pull/73))
+- Remove redundant import of `eth-block-tracker` ([#72](https://github.com/MetaMask/nonce-tracker/pull/72))
+
 ## [4.0.0]
 ### Changed
 - **BREAKING**: Bump `eth-block-tracker` from `^4.4.3` to `^8.1.0` ([#56](https://github.com/MetaMask/nonce-tracker/pull/56))
@@ -46,7 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add documentation
 
-[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v4.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v1.2.0...v2.0.0
