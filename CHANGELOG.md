@@ -7,11 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [5.0.0]
-### Uncategorized
-- Bump tar from 6.2.0 to 6.2.1 ([#70](https://github.com/MetaMask/nonce-tracker/pull/70))
-- Enabling MetaMask security code scanner ([#63](https://github.com/MetaMask/nonce-tracker/pull/63))
-- Bump ip from 2.0.0 to 2.0.1 ([#62](https://github.com/MetaMask/nonce-tracker/pull/62))
-- Rename package from nonce-tracker to @metamask/nonce-tracker ([#61](https://github.com/MetaMask/nonce-tracker/pull/61))
+### Changed
+- Rename package from `nonce-tracker` to `@metamask/nonce-tracker` ([#61](https://github.com/MetaMask/nonce-tracker/pull/61))
 
 ## [4.0.0]
 ### Changed
