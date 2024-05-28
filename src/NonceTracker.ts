@@ -88,22 +88,22 @@ export interface Transaction {
 }
 
 export class NonceTracker {
-  private provider: Record<string, unknown>;
+  #provider: Record<string, unknown>;
 
-  private blockTracker: PollingBlockTracker;
+  #blockTracker: PollingBlockTracker;
 
-  private getPendingTransactions: (address: string) => Transaction[];
+  readonly #getPendingTransactions: (address: string) => Transaction[];
 
-  private getConfirmedTransactions: (address: string) => Transaction[];
+  readonly #getConfirmedTransactions: (address: string) => Transaction[];
 
-  private lockMap: Record<string, Mutex>;
+  readonly #lockMap: Record<string, Mutex>;
 
   constructor(opts: NonceTrackerOptions) {
-    this.provider = opts.provider;
-    this.blockTracker = opts.blockTracker;
-    this.getPendingTransactions = opts.getPendingTransactions;
-    this.getConfirmedTransactions = opts.getConfirmedTransactions;
-    this.lockMap = {};
+    this.#provider = opts.provider;
+    this.#blockTracker = opts.blockTracker;
+    this.#getPendingTransactions = opts.getPendingTransactions;
+    this.#getConfirmedTransactions = opts.getConfirmedTransactions;
+    this.#lockMap = {};
   }
 
   /**
@@ -122,8 +122,8 @@ export class NonceTracker {
   }): void {
     assert(typeof provider === 'object', 'missing or invalid provider');
     assert(typeof blockTracker === 'object', 'missing or invalid blockTracker');
-    this.provider = provider;
-    this.blockTracker = blockTracker;
+    this.#provider = provider;
+    this.#blockTracker = blockTracker;
   }
 
   /**
@@ -160,7 +160,7 @@ export class NonceTracker {
         highestLocallyConfirmed,
       );
 
-      const pendingTxs: Transaction[] = this.getPendingTransactions(address);
+      const pendingTxs: Transaction[] = this.#getPendingTransactions(address);
       const localNonceResult: HighestContinuousFrom =
         this._getHighestContinuousFrom(pendingTxs, highestSuggested);
 
@@ -205,10 +205,10 @@ export class NonceTracker {
   }
 
   _lookupMutex(lockId: string): Mutex {
-    let mutex: Mutex = this.lockMap[lockId];
+    let mutex: Mutex = this.#lockMap[lockId];
     if (!mutex) {
       mutex = new Mutex();
-      this.lockMap[lockId] = mutex;
+      this.#lockMap[lockId] = mutex;
     }
     return mutex;
   }
@@ -224,9 +224,9 @@ export class NonceTracker {
     // calculate next nonce
     // we need to make sure our base count
     // and pending count are from the same block
-    const blockNumber = await this.blockTracker.getLatestBlock();
+    const blockNumber = await this.#blockTracker.getLatestBlock();
     const baseCount: number = await new Web3Provider(
-      this.provider,
+      this.#provider,
     ).getTransactionCount(address, blockNumber);
     assert(
       Number.isInteger(baseCount),
@@ -246,7 +246,7 @@ export class NonceTracker {
    */
   _getHighestLocallyConfirmed(address: string): number {
     const confirmedTransactions: Transaction[] =
-      this.getConfirmedTransactions(address);
+      this.#getConfirmedTransactions(address);
     const highest: number = this._getHighestNonce(confirmedTransactions);
     return Number.isInteger(highest) ? highest + 1 : 0;
   }
