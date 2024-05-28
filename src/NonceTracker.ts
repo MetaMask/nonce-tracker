@@ -2,12 +2,11 @@ import assert from 'assert';
 import { Mutex } from 'async-mutex';
 import type { PollingBlockTracker } from '@metamask/eth-block-tracker';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const { Web3Provider } = require('@ethersproject/providers');
+import { Web3Provider } from '@ethersproject/providers';
 
 /**
  * @property opts.provider - An ethereum provider
- * @property opts.blockTracker - An instance of eth-block-tracker
+ * @property opts.blockTracker - An instance of @metamask/eth-block-tracker
  * @property opts.getPendingTransactions - A function that returns an array of txMeta
  *  whose status is `submitted`
  * @property opts.getConfirmedTransactions - A function that returns an array of txMeta
@@ -93,8 +92,6 @@ export class NonceTracker {
 
   private blockTracker: PollingBlockTracker;
 
-  private web3: typeof Web3Provider;
-
   private getPendingTransactions: (address: string) => Transaction[];
 
   private getConfirmedTransactions: (address: string) => Transaction[];
@@ -104,10 +101,29 @@ export class NonceTracker {
   constructor(opts: NonceTrackerOptions) {
     this.provider = opts.provider;
     this.blockTracker = opts.blockTracker;
-    this.web3 = new Web3Provider(opts.provider);
     this.getPendingTransactions = opts.getPendingTransactions;
     this.getConfirmedTransactions = opts.getConfirmedTransactions;
     this.lockMap = {};
+  }
+
+  /**
+   * Allows changing the provider and block tracker after insrtantiation. As the blockTracker also has a provider, they are updated atomically.
+   *
+   * @param opts - new props
+   * @param opts.provider - An ethereum provider
+   * @param opts.blockTracker - An instance of @metamask/eth-block-tracker
+   */
+  setProvider({
+    provider,
+    blockTracker,
+  }: {
+    provider: Record<string, unknown>;
+    blockTracker: PollingBlockTracker;
+  }): void {
+    assert(typeof provider === 'object', 'missing or invalid provider');
+    assert(typeof blockTracker === 'object', 'missing or invalid blockTracker');
+    this.provider = provider;
+    this.blockTracker = blockTracker;
   }
 
   /**
@@ -209,10 +225,9 @@ export class NonceTracker {
     // we need to make sure our base count
     // and pending count are from the same block
     const blockNumber = await this.blockTracker.getLatestBlock();
-    const baseCount: number = await this.web3.getTransactionCount(
-      address,
-      blockNumber,
-    );
+    const baseCount: number = await new Web3Provider(
+      this.provider,
+    ).getTransactionCount(address, blockNumber);
     assert(
       Number.isInteger(baseCount),
       `nonce-tracker - baseCount is not an integer - got: (${typeof baseCount}) "${baseCount}"`,
