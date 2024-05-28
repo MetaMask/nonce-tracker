@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename package from `nonce-tracker` to `@metamask/nonce-tracker` ([#61](https://github.com/MetaMask/nonce-tracker/pull/61))
 
 ### Fixed
+- **BREAKING**: Replace implicit peer-dependency `eth-block-tracker` with explicit peerDependency `@metamask/eth-block-tracker` ([#73](https://github.com/MetaMask/nonce-tracker/pull/73))
 - Remove redundant import of `eth-block-tracker` ([#72](https://github.com/MetaMask/nonce-tracker/pull/72))
 
 ## [4.0.0]
