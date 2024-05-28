@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [6.0.0]
-### Uncategorized
-- types: allow blockTracker to be any BlockTracker ([#76](https://github.com/MetaMask/nonce-tracker/pull/76))
-- Dynamic provider private props ([#75](https://github.com/MetaMask/nonce-tracker/pull/75))
+### Added
+- New `setProvider` function allows atomically changing provider and blockTracker ([#75](https://github.com/MetaMask/nonce-tracker/pull/75))
+
+### Removed
+- **BREAKING**: These private properties are no longer accessible: ([#75](https://github.com/MetaMask/nonce-tracker/pull/75))
+  - `blockTracker`
+  - `lockMap`
+  - `provider`
+  - `web3`
+- **BREAKING**: These private functions are no longer accessible: ([#75](https://github.com/MetaMask/nonce-tracker/pull/75))
+  - `getConfirmedTransactions`
+  - `getPendingTransactions`
+
+### Fixed
+- Types: Allow `blockTracker` constructor option to be any `BlockTracker` instead of class `PollingBlockTracker` ([#76](https://github.com/MetaMask/nonce-tracker/pull/76))
 
 ## [5.0.0]
 ### Changed
