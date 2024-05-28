@@ -2,12 +2,11 @@ import assert from 'assert';
 import { Mutex } from 'async-mutex';
 import type { PollingBlockTracker } from '@metamask/eth-block-tracker';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const { Web3Provider } = require('@ethersproject/providers');
+import { Web3Provider } from '@ethersproject/providers';
 
 /**
  * @property opts.provider - An ethereum provider
- * @property opts.blockTracker - An instance of eth-block-tracker
+ * @property opts.blockTracker - An instance of @metamask/eth-block-tracker
  * @property opts.getPendingTransactions - A function that returns an array of txMeta
  *  whose status is `submitted`
  * @property opts.getConfirmedTransactions - A function that returns an array of txMeta
@@ -89,25 +88,42 @@ export interface Transaction {
 }
 
 export class NonceTracker {
-  private provider: Record<string, unknown>;
+  #provider: Record<string, unknown>;
 
-  private blockTracker: PollingBlockTracker;
+  #blockTracker: PollingBlockTracker;
 
-  private web3: typeof Web3Provider;
+  readonly #getPendingTransactions: (address: string) => Transaction[];
 
-  private getPendingTransactions: (address: string) => Transaction[];
+  readonly #getConfirmedTransactions: (address: string) => Transaction[];
 
-  private getConfirmedTransactions: (address: string) => Transaction[];
-
-  private lockMap: Record<string, Mutex>;
+  readonly #lockMap: Record<string, Mutex>;
 
   constructor(opts: NonceTrackerOptions) {
-    this.provider = opts.provider;
-    this.blockTracker = opts.blockTracker;
-    this.web3 = new Web3Provider(opts.provider);
-    this.getPendingTransactions = opts.getPendingTransactions;
-    this.getConfirmedTransactions = opts.getConfirmedTransactions;
-    this.lockMap = {};
+    this.#provider = opts.provider;
+    this.#blockTracker = opts.blockTracker;
+    this.#getPendingTransactions = opts.getPendingTransactions;
+    this.#getConfirmedTransactions = opts.getConfirmedTransactions;
+    this.#lockMap = {};
+  }
+
+  /**
+   * Allows changing the provider and block tracker after insrtantiation. As the blockTracker also has a provider, they are updated atomically.
+   *
+   * @param opts - new props
+   * @param opts.provider - An ethereum provider
+   * @param opts.blockTracker - An instance of @metamask/eth-block-tracker
+   */
+  setProvider({
+    provider,
+    blockTracker,
+  }: {
+    provider: Record<string, unknown>;
+    blockTracker: PollingBlockTracker;
+  }): void {
+    assert(typeof provider === 'object', 'missing or invalid provider');
+    assert(typeof blockTracker === 'object', 'missing or invalid blockTracker');
+    this.#provider = provider;
+    this.#blockTracker = blockTracker;
   }
 
   /**
@@ -144,7 +160,7 @@ export class NonceTracker {
         highestLocallyConfirmed,
       );
 
-      const pendingTxs: Transaction[] = this.getPendingTransactions(address);
+      const pendingTxs: Transaction[] = this.#getPendingTransactions(address);
       const localNonceResult: HighestContinuousFrom =
         this._getHighestContinuousFrom(pendingTxs, highestSuggested);
 
@@ -189,10 +205,10 @@ export class NonceTracker {
   }
 
   _lookupMutex(lockId: string): Mutex {
-    let mutex: Mutex = this.lockMap[lockId];
+    let mutex: Mutex = this.#lockMap[lockId];
     if (!mutex) {
       mutex = new Mutex();
-      this.lockMap[lockId] = mutex;
+      this.#lockMap[lockId] = mutex;
     }
     return mutex;
   }
@@ -208,11 +224,10 @@ export class NonceTracker {
     // calculate next nonce
     // we need to make sure our base count
     // and pending count are from the same block
-    const blockNumber = await this.blockTracker.getLatestBlock();
-    const baseCount: number = await this.web3.getTransactionCount(
-      address,
-      blockNumber,
-    );
+    const blockNumber = await this.#blockTracker.getLatestBlock();
+    const baseCount: number = await new Web3Provider(
+      this.#provider,
+    ).getTransactionCount(address, blockNumber);
     assert(
       Number.isInteger(baseCount),
       `nonce-tracker - baseCount is not an integer - got: (${typeof baseCount}) "${baseCount}"`,
@@ -231,7 +246,7 @@ export class NonceTracker {
    */
   _getHighestLocallyConfirmed(address: string): number {
     const confirmedTransactions: Transaction[] =
-      this.getConfirmedTransactions(address);
+      this.#getConfirmedTransactions(address);
     const highest: number = this._getHighestNonce(confirmedTransactions);
     return Number.isInteger(highest) ? highest + 1 : 0;
   }
