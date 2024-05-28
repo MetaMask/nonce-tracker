@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0]
+### Added
+- New `setProvider` function allows atomically changing provider and blockTracker ([#75](https://github.com/MetaMask/nonce-tracker/pull/75))
+
+### Removed
+- **BREAKING**: These private properties are no longer accessible: ([#75](https://github.com/MetaMask/nonce-tracker/pull/75))
+  - `blockTracker`
+  - `lockMap`
+  - `provider`
+  - `web3`
+- **BREAKING**: These private functions are no longer accessible: ([#75](https://github.com/MetaMask/nonce-tracker/pull/75))
+  - `getConfirmedTransactions`
+  - `getPendingTransactions`
+
+### Fixed
+- Types: Allow `blockTracker` constructor option to be any `BlockTracker` instead of class `PollingBlockTracker` ([#76](https://github.com/MetaMask/nonce-tracker/pull/76))
+
 ## [5.0.0]
 ### Changed
 - Rename package from `nonce-tracker` to `@metamask/nonce-tracker` ([#61](https://github.com/MetaMask/nonce-tracker/pull/61))
@@ -54,7 +71,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add documentation
 
-[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v5.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/nonce-tracker/compare/v6.0.0...HEAD
+[6.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v5.0.0...v6.0.0
 [5.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/MetaMask/nonce-tracker/compare/v2.0.0...v3.0.0
