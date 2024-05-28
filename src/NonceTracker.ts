@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { Mutex } from 'async-mutex';
-import type { PollingBlockTracker } from '@metamask/eth-block-tracker';
+import type { BlockTracker } from '@metamask/eth-block-tracker';
 
 import { Web3Provider } from '@ethersproject/providers';
 
@@ -14,7 +14,7 @@ import { Web3Provider } from '@ethersproject/providers';
  */
 export interface NonceTrackerOptions {
   provider: Record<string, unknown>;
-  blockTracker: PollingBlockTracker;
+  blockTracker: BlockTracker;
   getPendingTransactions: (address: string) => Transaction[];
   getConfirmedTransactions: (address: string) => Transaction[];
 }
@@ -90,7 +90,7 @@ export interface Transaction {
 export class NonceTracker {
   #provider: Record<string, unknown>;
 
-  #blockTracker: PollingBlockTracker;
+  #blockTracker: BlockTracker;
 
   readonly #getPendingTransactions: (address: string) => Transaction[];
 
@@ -118,7 +118,7 @@ export class NonceTracker {
     blockTracker,
   }: {
     provider: Record<string, unknown>;
-    blockTracker: PollingBlockTracker;
+    blockTracker: BlockTracker;
   }): void {
     assert(typeof provider === 'object', 'missing or invalid provider');
     assert(typeof blockTracker === 'object', 'missing or invalid blockTracker');
