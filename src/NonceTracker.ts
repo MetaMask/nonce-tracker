@@ -104,7 +104,6 @@ export class NonceTracker {
   constructor(opts: NonceTrackerOptions) {
     this.provider = opts.provider;
     this.blockTracker = opts.blockTracker;
-    this.web3 = new Web3Provider(opts.provider);
     this.getPendingTransactions = opts.getPendingTransactions;
     this.getConfirmedTransactions = opts.getConfirmedTransactions;
     this.lockMap = {};
@@ -209,10 +208,9 @@ export class NonceTracker {
     // we need to make sure our base count
     // and pending count are from the same block
     const blockNumber = await this.blockTracker.getLatestBlock();
-    const baseCount: number = await this.web3.getTransactionCount(
-      address,
-      blockNumber,
-    );
+    const baseCount: number = await new Web3Provider(
+      this.provider,
+    ).getTransactionCount(address, blockNumber);
     assert(
       Number.isInteger(baseCount),
       `nonce-tracker - baseCount is not an integer - got: (${typeof baseCount}) "${baseCount}"`,
