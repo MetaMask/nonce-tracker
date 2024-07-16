@@ -322,12 +322,9 @@ describe('Nonce Tracker', function () {
 });
 
 function generateProviderWith(nonce) {
-  const providerResultStub = {};
-
-  providerResultStub.result = nonce;
   return {
-    sendAsync: (_, cb) => {
-      cb(undefined, providerResultStub);
+    request: () => {
+      return Promise.resolve(nonce);
     },
   };
 }
