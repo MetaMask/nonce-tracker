@@ -7,10 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [6.0.1]
-### Uncategorized
-- deps: async-mutex@^0.3.1->^0.5.0 ([#78](https://github.com/MetaMask/nonce-tracker/pull/78))
-- adapt to eip-1193 provider changes ([#81](https://github.com/MetaMask/nonce-tracker/pull/81))
-- Bump braces in the npm_and_yarn group across 1 directory ([#80](https://github.com/MetaMask/nonce-tracker/pull/80))
+### Fixed
+- Bump `async-mutex` from `^0.3.1` to `^0.5.0` ([#78](https://github.com/MetaMask/nonce-tracker/pull/78))
 
 ## [6.0.0]
 ### Added
