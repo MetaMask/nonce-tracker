@@ -7,9 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [6.1.0]
-### Uncategorized
-- Bump cross-spawn from 7.0.3 to 7.0.6 in the npm_and_yarn group ([#84](https://github.com/MetaMask/nonce-tracker/pull/84))
-
 ### Changed
 - Remove `@metamask/eth-block-tracker` peer dependency ([#85](https://github.com/MetaMask/nonce-tracker/pull/85))
 
