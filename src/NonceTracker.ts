@@ -1,8 +1,15 @@
 import assert from 'assert';
 import { Mutex } from 'async-mutex';
-import type { BlockTracker } from '@metamask/eth-block-tracker';
 
 import { Web3Provider } from '@ethersproject/providers';
+
+/**
+ * A minimal "block tracker" type, with just the method used here. This is based upon the
+ * `BlockTracker` type from `@metamask/eth-block-tracker`.
+ */
+type BlockTracker = {
+  getLatestBlock: () => Promise<string>;
+};
 
 /**
  * @property opts.provider - An ethereum provider
