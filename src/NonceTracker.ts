@@ -5,7 +5,7 @@ import { Web3Provider } from '@ethersproject/providers';
 
 /**
  * A minimal "block tracker" type, with just the method used here. This is based upon the
- * `BlockTracker` type from `@metamask/eth-block-tracker`.
+ * `BlockTracker` type from `@metamask/eth-block-tracker` v9.
  */
 type BlockTracker = {
   getLatestBlock: () => Promise<string>;
