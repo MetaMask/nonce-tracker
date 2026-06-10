@@ -9,6 +9,10 @@
     "type": "git",
     "url": "https://github.com/MetaMask/nonce-tracker.git"
   },
+  "homepage": "https://github.com/MetaMask/nonce-tracker#readme",
+  "bugs": {
+    "url": "https://github.com/MetaMask/nonce-tracker/issues"
+  },
   "license": "ISC",
   "author": "",
   "main": "dist/index.js",
